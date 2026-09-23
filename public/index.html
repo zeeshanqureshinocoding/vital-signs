@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>Vital Signs — Two Player Co-op</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="lobby-page">
+  <main class="lobby-shell">
+    <section class="brand-card" aria-labelledby="game-title">
+      <p class="eyebrow">Two-player emergency protocol</p>
+      <h1 id="game-title">Vital <span>Signs</span></h1>
+      <p class="lede">One player sees the patient. One player holds the manual. Talk fast—every second matters.</p>
+      <div class="role-explainer">
+        <article><span aria-hidden="true">✚</span><h2>The Medic</h2><p>Monitor live vitals and administer treatment.</p></article>
+        <article><span aria-hidden="true">⌕</span><h2>The Lab</h2><p>Decode symptoms and direct the protocol.</p></article>
+      </div>
+    </section>
+
+    <section class="lobby-card" aria-labelledby="room-title">
+      <p class="eyebrow">Secure game room</p>
+      <h2 id="room-title">Start a shift</h2>
+      <p class="muted">Choose your role, then create a room or join your partner.</p>
+
+      <fieldset class="role-picker">
+        <legend>Choose your role</legend>
+        <label class="role-option">
+          <input type="radio" name="role" value="medic" checked>
+          <span><strong>Medic</strong><small>Vitals and treatments</small></span>
+        </label>
+        <label class="role-option">
+          <input type="radio" name="role" value="lab">
+          <span><strong>Lab</strong><small>Manual and diagnosis</small></span>
+        </label>
+      </fieldset>
+
+      <button id="create-room" class="button button-primary" type="button">Create a private room</button>
+      <div class="divider"><span>or join a partner</span></div>
+      <form id="join-room-form" novalidate>
+        <label for="room-code">Room code</label>
+        <div class="join-row">
+          <input id="room-code" name="roomCode" maxlength="4" autocomplete="off" autocapitalize="characters" placeholder="ABCD" aria-describedby="lobby-message">
+          <button class="button button-secondary" type="submit">Join room</button>
+        </div>
+      </form>
+      <p id="lobby-message" class="form-message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/socket.js"></script>
+  <script src="/js/lobby.js"></script>
+</body>
+</html>

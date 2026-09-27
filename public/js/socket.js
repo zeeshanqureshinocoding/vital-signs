@@ -35,7 +35,7 @@
     setSession(roomCode, role) {
       state.roomCode = roomCode;
       state.role = role;
-      this.ensurePlayerId();
+      window.VitalSigns.ensurePlayerId(); // The fix is right here
       persist();
     },
     clearSession() {

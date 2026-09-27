@@ -28,9 +28,14 @@ class GameManager {
     this.cleanupInterval.unref?.();
   }
 
+<<<<<<< HEAD
   createRoom(socket, requestedRole, requestedPlayerId) {
     const role = this.validateRole(requestedRole);
     const playerId = this.validatePlayerId(requestedPlayerId);
+=======
+  createRoom(socket, requestedRole) {
+    const role = this.validateRole(requestedRole);
+>>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
     this.leaveCurrentRoom(socket, { notify: false });
 
     let roomCode;
@@ -38,7 +43,11 @@ class GameManager {
 
     const room = this.newRoom(roomCode);
     this.rooms.set(roomCode, room);
+<<<<<<< HEAD
     this.assignPlayer(room, role, socket, playerId);
+=======
+    this.assignPlayer(room, role, socket);
+>>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
     socket.join(roomCode);
     this.socketMemberships.set(socket.id, { roomCode, role });
 
@@ -47,15 +56,22 @@ class GameManager {
     return room;
   }
 
+<<<<<<< HEAD
   joinRoom(socket, requestedRoomCode, requestedRole, requestedPlayerId) {
     const roomCode = this.normalizeRoomCode(requestedRoomCode);
     const role = this.validateRole(requestedRole);
     const playerId = this.validatePlayerId(requestedPlayerId);
+=======
+  joinRoom(socket, requestedRoomCode, requestedRole) {
+    const roomCode = this.normalizeRoomCode(requestedRoomCode);
+    const role = this.validateRole(requestedRole);
+>>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
     const room = this.rooms.get(roomCode);
     if (!room) throw new Error('Room not found. Check the room code and try again.');
 
     this.leaveCurrentRoom(socket, { notify: false });
     const slot = room.players[role];
+<<<<<<< HEAD
     const isSessionTransfer = Boolean(slot.socketId && slot.socketId !== socket.id && slot.playerId === playerId);
     if (slot.socketId && slot.socketId !== socket.id && !isSessionTransfer) {
       throw new Error(`The ${role} role is already occupied.`);
@@ -66,6 +82,14 @@ class GameManager {
       const reconnectWindowOpen = slot.playerId === playerId && slot.disconnectedAt && this.now() - slot.disconnectedAt <= RECONNECT_GRACE_MS;
       if (!isSessionTransfer && !reconnectWindowOpen) throw new Error('This game is already in progress.');
       this.assignPlayer(room, role, socket, playerId);
+=======
+    if (slot.socketId && slot.socketId !== socket.id) throw new Error(`The ${role} role is already occupied.`);
+
+    if (room.status === GAME_STATUS.ACTIVE) {
+      const reconnectWindowOpen = slot.disconnectedAt && this.now() - slot.disconnectedAt <= RECONNECT_GRACE_MS;
+      if (!reconnectWindowOpen) throw new Error('This game is already in progress.');
+      this.assignPlayer(room, role, socket);
+>>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
       socket.join(roomCode);
       this.socketMemberships.set(socket.id, { roomCode, role });
       room.lastActivityAt = this.now();
@@ -78,7 +102,11 @@ class GameManager {
       return room;
     }
 
+<<<<<<< HEAD
     this.assignPlayer(room, role, socket, playerId);
+=======
+    this.assignPlayer(room, role, socket);
+>>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
     socket.join(roomCode);
     this.socketMemberships.set(socket.id, { roomCode, role });
     room.lastActivityAt = this.now();
@@ -302,8 +330,13 @@ class GameManager {
       roomCode,
       status: GAME_STATUS.WAITING,
       players: {
+<<<<<<< HEAD
         [ROLES.MEDIC]: { socketId: null, playerId: null, disconnectedAt: null, reconnectHandle: null },
         [ROLES.LAB]: { socketId: null, playerId: null, disconnectedAt: null, reconnectHandle: null }
+=======
+        [ROLES.MEDIC]: { socketId: null, disconnectedAt: null, reconnectHandle: null },
+        [ROLES.LAB]: { socketId: null, disconnectedAt: null, reconnectHandle: null }
+>>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
       },
       scenarioId: null,
       startedAt: null,
@@ -318,6 +351,7 @@ class GameManager {
     };
   }
 
+<<<<<<< HEAD
   assignPlayer(room, role, socket, playerId) {
     const previousSlot = room.players[role];
     if (previousSlot.reconnectHandle) clearTimeout(previousSlot.reconnectHandle);
@@ -330,6 +364,12 @@ class GameManager {
     this.socketMemberships.delete(previousSocketId);
     const previousSocket = this.io.sockets?.sockets?.get(previousSocketId);
     previousSocket?.leave(room.roomCode);
+=======
+  assignPlayer(room, role, socket) {
+    const previousSlot = room.players[role];
+    if (previousSlot.reconnectHandle) clearTimeout(previousSlot.reconnectHandle);
+    room.players[role] = { socketId: socket.id, disconnectedAt: null, reconnectHandle: null };
+>>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
   }
 
   isRoomReady(room) {
@@ -395,6 +435,7 @@ class GameManager {
     if (role !== ROLES.MEDIC && role !== ROLES.LAB) throw new Error('Role must be medic or lab.');
     return role;
   }
+<<<<<<< HEAD
 
   validatePlayerId(playerId) {
     if (typeof playerId !== 'string' || !/^[a-zA-Z0-9-]{16,80}$/.test(playerId)) {
@@ -402,6 +443,8 @@ class GameManager {
     }
     return playerId;
   }
+=======
+>>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
 }
 
 module.exports = { GameManager };

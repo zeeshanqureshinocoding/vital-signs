@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>Vital Signs — Game</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="game-page">
+  <header class="game-header">
+    <a class="wordmark" href="/index.html" aria-label="Return to Vital Signs lobby">Vital <span>Signs</span></a>
+    <div class="header-status">
+      <span class="room-badge">Room <strong id="room-code-display">----</strong></span>
+      <span id="role-badge" class="role-badge">Loading role…</span>
+      <span id="connection-status" class="connection-status">Connecting</span>
+    </div>
+    <div id="timer" class="timer" aria-live="polite">01:00</div>
+  </header>
+
+  <main class="game-shell">
+    <section id="waiting-screen" class="waiting-screen" aria-live="polite">
+      <div class="pulse-mark" aria-hidden="true">✚</div>
+      <p class="eyebrow">Room <span id="waiting-room-code">----</span></p>
+      <h1 id="waiting-title">Connecting to your room…</h1>
+      <p id="waiting-detail" class="muted">Checking the patient roster.</p>
+      <div class="roster">
+        <div id="medic-presence" class="roster-item"><span>Medic</span><strong>Waiting</strong></div>
+        <div id="lab-presence" class="roster-item"><span>Lab</span><strong>Waiting</strong></div>
+      </div>
+      <button id="start-game" class="button button-primary" type="button" hidden>Begin emergency protocol</button>
+      <p id="game-message" class="form-message" role="status"></p>
+      <button id="leave-room" class="text-button" type="button">Leave room</button>
+    </section>
+
+    <section id="medic-board" class="role-board" hidden aria-labelledby="medic-heading">
+      <div class="board-intro"><p class="eyebrow">Patient telemetry</p><h1 id="medic-heading">Medic station</h1><p>Report every change to the Lab. Only they know the protocol.</p></div>
+      <div class="medic-layout">
+        <section class="telemetry-panel panel" aria-label="Live patient vitals">
+          <div class="monitor-topline"><span class="live-dot">LIVE</span><span id="vitals-updated">Awaiting telemetry</span></div>
+          <div class="vital-grid">
+            <article class="vital-card hr"><span>Heart rate</span><strong id="heart-rate">--</strong><small>BPM</small></article>
+            <article class="vital-card bp"><span>Blood pressure</span><strong id="blood-pressure">--/--</strong><small>mmHg</small></article>
+            <article class="vital-card o2"><span>Oxygen</span><strong id="oxygen">--</strong><small>SpO₂ %</small></article>
+            <article class="vital-card temp"><span>Temperature</span><strong id="temperature">--.-</strong><small>°C</small></article>
+          </div>
+          <div class="waveform" aria-hidden="true"><svg viewBox="0 0 800 70" preserveAspectRatio="none"><path d="M0 35h100l14-13 13 31 15-49 16 59 17-28h95l14-13 13 31 15-49 16 59 17-28h95l14-13 13 31 15-49 16 59 17-28h95l14-13 13 31 15-49 16 59 17-28h100"/></svg></div>
+        </section>
+        <section class="alerts-panel panel" aria-labelledby="alerts-heading"><div class="panel-title"><h2 id="alerts-heading">Biological alerts</h2><span id="alert-count">0 active</span></div><ul id="symptom-list" class="symptom-list" aria-live="polite"><li class="empty-state">No active biological alerts.</li></ul></section>
+        <section class="treatments-panel panel" aria-labelledby="treatment-heading"><div class="panel-title"><h2 id="treatment-heading">Treatment console</h2><span id="protocol-progress">Protocol: 0 steps</span></div><p class="muted">Confirm every action with the Lab before administering.</p><div id="treatment-buttons" class="treatment-grid"></div><p id="treatment-feedback" class="treatment-feedback" aria-live="polite">Awaiting Lab instruction.</p></section>
+      </div>
+    </section>
+
+    <section id="lab-board" class="role-board" hidden aria-labelledby="lab-heading">
+      <div class="board-intro"><p class="eyebrow">Pathogen reference archive</p><h1 id="lab-heading">Lab station</h1><p>Ask the Medic for exact readings and alerts. Identify the matching protocol, then speak the sequence clearly.</p></div>
+      <section class="lab-callout panel"><strong>Diagnostic checklist</strong><span>Ask for temperature, blood pressure, oxygen, heart rate, and the newest biological alert.</span></section>
+      <div id="manual-grid" class="manual-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <div id="game-over-modal" class="modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="game-over-title">
+    <section class="game-over-card"><p id="game-over-kicker" class="eyebrow">Round complete</p><h2 id="game-over-title">Protocol complete</h2><p id="game-over-reason"></p><div id="game-over-details" class="outcome-details"></div><button id="rematch" class="button button-primary" type="button">Run another protocol</button><button id="return-lobby" class="text-button" type="button">Return to lobby</button></section>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/socket.js"></script>
+  <script src="/js/medic.js"></script>
+  <script src="/js/lab.js"></script>
+  <script src="/js/game.js"></script>
+</body>
+</html>

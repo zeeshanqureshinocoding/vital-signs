@@ -1,11 +1,7 @@
 'use strict';
 
 (() => {
-<<<<<<< HEAD
   const { socket, state, setSession, ensurePlayerId, clearSession, emit } = window.VitalSigns;
-=======
-  const { socket, state, setSession, clearSession, emit } = window.VitalSigns;
->>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
   const waiting = document.querySelector('#waiting-screen');
   const startButton = document.querySelector('#start-game');
   const message = document.querySelector('#game-message');
@@ -32,11 +28,7 @@
   }
   function reconnectToRoom() {
     if (!state.roomCode || !state.role) { window.location.replace('/index.html'); return; }
-<<<<<<< HEAD
     emit('joinRoom', { roomCode: state.roomCode, role: state.role, playerId: ensurePlayerId() }, (result) => { if (!result.ok) { showMessage(result.message, true); } });
-=======
-    emit('joinRoom', { roomCode: state.roomCode, role: state.role }, (result) => { if (!result.ok) { showMessage(result.message, true); } });
->>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
   }
 
   renderIdentity();

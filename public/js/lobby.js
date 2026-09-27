@@ -1,11 +1,7 @@
 'use strict';
 
 (() => {
-<<<<<<< HEAD
   const { socket, state, setSession, ensurePlayerId, emit } = window.VitalSigns;
-=======
-  const { socket, state, setSession, emit } = window.VitalSigns;
->>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
   const createButton = document.querySelector('#create-room');
   const joinForm = document.querySelector('#join-room-form');
   const roomCodeInput = document.querySelector('#room-code');
@@ -27,11 +23,7 @@
   createButton.addEventListener('click', () => {
     setBusy(true);
     showMessage('Creating private room…');
-<<<<<<< HEAD
     emit('createRoom', { role: selectedRole(), playerId: ensurePlayerId() }, (result) => { if (!result.ok) { setBusy(false); showMessage(result.message, true); } });
-=======
-    emit('createRoom', { role: selectedRole() }, (result) => { if (!result.ok) { setBusy(false); showMessage(result.message, true); } });
->>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
   });
 
   joinForm.addEventListener('submit', (event) => {
@@ -40,10 +32,6 @@
     if (roomCode.length !== 4) return showMessage('Enter the four-character room code.', true);
     setBusy(true);
     showMessage('Joining room…');
-<<<<<<< HEAD
     emit('joinRoom', { roomCode, role: selectedRole(), playerId: ensurePlayerId() }, (result) => { if (!result.ok) { setBusy(false); showMessage(result.message, true); } });
-=======
-    emit('joinRoom', { roomCode, role: selectedRole() }, (result) => { if (!result.ok) { setBusy(false); showMessage(result.message, true); } });
->>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
   });
 })();

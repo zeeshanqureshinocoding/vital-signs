@@ -34,13 +34,8 @@ io.on('connection', (socket) => {
     }
   };
 
-<<<<<<< HEAD
   socket.on('createRoom', respond(({ role, playerId }) => gameManager.createRoom(socket, role, playerId)));
   socket.on('joinRoom', respond(({ roomCode, role, playerId }) => gameManager.joinRoom(socket, roomCode, role, playerId)));
-=======
-  socket.on('createRoom', respond(({ role }) => gameManager.createRoom(socket, role)));
-  socket.on('joinRoom', respond(({ roomCode, role }) => gameManager.joinRoom(socket, roomCode, role)));
->>>>>>> 26c2fa4d40558037aaf36ad2a16cc07a3d1629b0
   socket.on('startGame', respond(({ roomCode }) => gameManager.startGame(socket, roomCode)));
   socket.on('applyTreatment', respond(({ roomCode, treatmentId }) => gameManager.applyTreatment(socket, roomCode, treatmentId)));
   socket.on('requestRematch', respond(({ roomCode }) => gameManager.requestRematch(socket, roomCode)));
